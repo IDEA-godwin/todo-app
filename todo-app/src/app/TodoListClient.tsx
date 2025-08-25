@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { API_URL } from "./constant";
+import { API_URL, APP_URL } from "./constant";
 
 interface Todo {
   id: number;
@@ -21,7 +21,7 @@ export default function TodoListClient({ todos: initialTodos }: { todos: Todo[] 
   // Fetch todos
   const fetchTodos = async () => {
     setLoading(true);
-    const res = await fetch(`${API_URL}/todos`);
+    const res = await fetch(`${APP_URL}/api/todos`);
     const data = await res.json();
     setTodos(data.data);
     setLoading(false);
@@ -31,7 +31,7 @@ export default function TodoListClient({ todos: initialTodos }: { todos: Todo[] 
   const handleAddTodo = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
-    await fetch(`${API_URL}/todos`, {
+    await fetch(`${APP_URL}/api/todos`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, description }),
@@ -43,7 +43,7 @@ export default function TodoListClient({ todos: initialTodos }: { todos: Todo[] 
 
   // Delete todo
   const handleDelete = async (id: number) => {
-    await fetch(`${API_URL}/todos/${id}`, {
+    await fetch(`${APP_URL}/api/todos/${id}`, {
       method: "DELETE",
     });
     fetchTodos();
@@ -65,7 +65,7 @@ export default function TodoListClient({ todos: initialTodos }: { todos: Todo[] 
 
   // Save edit
   const handleSaveEdit = async (id: number) => {
-    await fetch(`${API_URL}/todos/${id}`, {
+    await fetch(`${APP_URL}/api/todos/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title: editTitle, description: editDescription, completed: todos.find(t => t.id === id)?.completed || 0 }),
@@ -78,7 +78,7 @@ export default function TodoListClient({ todos: initialTodos }: { todos: Todo[] 
 
   // Toggle completed
   const handleToggleCompleted = async (todo: Todo) => {
-    await fetch(`${API_URL}/todos/${todo.id}`, {
+    await fetch(`/api/todos/${todo.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
