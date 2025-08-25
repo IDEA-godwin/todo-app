@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: todo-app-express
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+    rootDir: todo-app-express
+
