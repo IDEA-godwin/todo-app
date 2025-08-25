@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { API_URL, APP_URL } from "./constant";
+import { APP_URL } from "./constant";
 
 interface Todo {
   id: number;
@@ -22,7 +22,8 @@ export default function TodoListClient({ todos: initialTodos }: { todos: Todo[] 
   const fetchTodos = async () => {
     setLoading(true);
     const res = await fetch(`${APP_URL}/api/todos`);
-    const data = await res.json();
+    const { data } = await res.json();
+    console.log(data)
     setTodos(data.data);
     setLoading(false);
   };
